@@ -1,7 +1,7 @@
 Name:    konsole
 Summary: KDE Terminal emulator
 Version: 4.10.5
-Release: 1%{?dist}
+Release: 3%{?dist}
 
 # sources: MIT and LGPLv2 and LGPLv2+ and GPLv2+
 License: GPLv2 and GFDL
@@ -80,6 +80,12 @@ desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/konsole.des
 
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.10.5-3
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 4.10.5-2
+- Mass rebuild 2013-12-27
+
 * Sun Jun 30 2013 Than Ngo <than@redhat.com> - 4.10.5-1
 - 4.10.5
 
