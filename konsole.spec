@@ -1,7 +1,7 @@
 Name:    konsole
 Summary: KDE Terminal emulator
 Version: 4.10.5
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 # sources: MIT and LGPLv2 and LGPLv2+ and GPLv2+
 License: GPLv2 and GFDL
@@ -13,6 +13,8 @@ URL:     http://konsole.kde.org/
 %global stable stable
 %endif 
 Source0: ftp://ftp.kde.org/pub/kde/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
+
+Patch1:  konsole-avoid-repeated-calls-to-redusername-method.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: kdelibs4-devel >= %{version}
@@ -39,6 +41,7 @@ Requires: kdelibs4%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %prep
 %setup -q
 
+%patch1 -p1 -b .avoid-repeated-calls-to-redusername-method
 
 %build
 mkdir -p %{_target_platform}
@@ -80,6 +83,10 @@ desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/konsole.des
 
 
 %changelog
+* Thu Mar 24 2016 Jan Grulich <jgrulich@redhat.com> - 4.10.5-4
+- Avoid repeated calls to readUserName() method
+  Resolves: bz#1283800
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.10.5-3
 - Mass rebuild 2014-01-24
 

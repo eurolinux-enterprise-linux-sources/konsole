@@ -1,0 +1,30 @@
+From 67aa1f8fb71df941bd62ebc046a182d2cba1f9d7 Mon Sep 17 00:00:00 2001
+From: Siteshwar Vashisht <svashisht@redhat.com>
+Date: Fri, 18 Dec 2015 20:42:12 +0530
+Subject: [PATCH] Avoid repeated calls to readUserName() method
+
+readUserName() method calls getpwuid_r() function. If user information
+is retrieved from remote server, it would flood the remote server
+with repeated requests. Username should be retrieved only once for a
+ProcessInfo instance.
+---
+ src/ProcessInfo.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/ProcessInfo.cpp b/src/ProcessInfo.cpp
+index aba138e..78e9f67 100644
+--- a/src/ProcessInfo.cpp
++++ b/src/ProcessInfo.cpp
+@@ -464,7 +464,9 @@ private:
+             const int uid = uidString.toInt(&ok);
+             if (ok)
+                 setUserId(uid);
+-            readUserName();
++
++            if (userName().isEmpty())
++                readUserName();
+         } else {
+             setFileError(statusInfo.error());
+             return false;
+-- 
+2.1.0
